@@ -36,9 +36,9 @@ namespace BookClub.BLL.Services
             if (user == null)
             {
                 User newUser = new User() { Login = userDTO.Login, Name = userDTO.Name };
+
                 _userRepository.Create(newUser);
                 _context.SaveChanges();
-
                 return new OperationDetails(true, "Регистрация успешно пройдена");
             }
             else

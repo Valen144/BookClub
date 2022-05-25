@@ -28,7 +28,7 @@ namespace BookClub.WEB.Controllers
               var user = _userService.AuthorizationAndRegistration(new UserDTO() { Login = model.Login });
 
                 if (user == null)
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddModelError("", "Ошибка авторизации");
                 else
                 {
                     HttpContext.Response.Cookies.Append("UserId", user.Id.ToString());

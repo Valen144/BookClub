@@ -55,11 +55,11 @@ namespace BookClub.BLL.Services
             return mapper.Map<IEnumerable<Book>, List<BookDTO>>(_bookRepository.GetAll());
         }
 
-        public IEnumerable<BookHistoryDTO> GetBookHistories(int userId)
+        public IEnumerable<BookHistoryDTO> GetUserBookHistory(int userId)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<BookHistory, BookHistoryDTO>()
-            .ForMember(x => x.BookId, x => x.MapFrom(c => c.Book.Id))
             .ForMember(x => x.BookName, x => x.MapFrom(c => c.Book.Name))
+            .ForMember(x => x.BookId, x => x.MapFrom(c => c.Book.Id))
             .ForMember(x => x.UserId, x => x.MapFrom(c => c.User.Id))).CreateMapper();
 
             return mapper.Map<IEnumerable<BookHistory>, List<BookHistoryDTO>>(_bookHistoryRepository.GetBookHistories(userId));

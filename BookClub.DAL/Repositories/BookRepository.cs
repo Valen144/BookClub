@@ -11,6 +11,7 @@ namespace BookClub.DAL.Repositories
         {
             _context = context;
         }
+
         public Book Get(int id)
         {
             return _context.Books.Find(id);

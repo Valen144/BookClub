@@ -8,6 +8,6 @@ namespace BookClub.BLL.Interfaces
         OperationDetails AddBook(BookHistoryDTO bookHistoryDTO);
         void RemoveBook(int id);
         IEnumerable<BookDTO> GetBooks();
-        IEnumerable<BookHistoryDTO> GetBookHistories(int userId);
+        IEnumerable<BookHistoryDTO> GetUserBookHistory(int userId);
     }
 }

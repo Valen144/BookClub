@@ -18,7 +18,7 @@ namespace BookClub.DAL.Repositories
             _context.Add(bookHistory);
         }
 
-        public virtual void Delete(int id)
+        public void Delete(int id)
         {
             BookHistory item = _context.BookHistories.Find(id);
             if (item != null)
@@ -37,7 +37,7 @@ namespace BookClub.DAL.Repositories
 
         public IEnumerable<BookHistory> GetBookHistories()
         {
-            return  _context.BookHistories
+            return _context.BookHistories
                 .Include(x => x.User)
                 .Include(x => x.Book).ToList();
         }

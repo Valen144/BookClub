@@ -4,8 +4,7 @@ namespace BookClub.WEB.Models
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Не указан Логин")]
+        [Required(ErrorMessage = "Укажите логин")]
         public string Login { get; set; }
-
     }
 }

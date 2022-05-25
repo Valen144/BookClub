@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BookClub.BLL.DTO.BookHistoryDTO>
+
+<h2>Мои прочитанные книги</h2>
+
+ <a asp-action="Index" asp-controller="Home">Назад</a>
+
+    <form asp-action="MyReadBook" asp-controller="Home" asp-anti-forgery="true" method="post">
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.BookName</td>
+            <td>
+    <div>
+        <div class="form-group">   
+            <input type="submit" value="Удалить" class="btn btn-outline-dark"  asp-route-idBookHistory="@item.Id"/>
+        </div>
+    </div>
+            </td>
+        </tr>
+    }
+</table>
+</form>
+
+@section scripts{
+ 
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

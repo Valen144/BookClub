@@ -5,9 +5,9 @@ namespace BookClub.BLL.Interfaces
 {
     public interface IReadingRoomService
     {
-        OperationDetails AddBook(BookHistoryDTO bookHistoryDTO);
-        void RemoveBook(int id);
-        IEnumerable<BookDTO> GetBooks();
-        IEnumerable<BookHistoryDTO> GetUserBookHistory(int userId);
+        Task<OperationDetails> AddBook(BookHistoryDTO bookHistoryDTO);
+        Task RemoveBook(int id);
+        Task<IEnumerable<BookDTO>> GetBooks();
+        Task<IEnumerable<BookHistoryDTO>> GetUserBookHistory(int userId);
     }
 }

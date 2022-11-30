@@ -7,7 +7,7 @@ using BookClub.DAL.Repositories;
 
 namespace BookClub.BLL.Services
 {
-    internal class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly BookClubContext _context;
         private readonly UserRepository _userRepository;
@@ -18,27 +18,28 @@ namespace BookClub.BLL.Services
             _userRepository = new UserRepository(context);
         }
 
-        public ApplicationUser Authorization(UserDTO userDTO)
+        public async Task<ApplicationUser?> Authorization(UserDTO userDTO)
         {
-            ApplicationUser applicationUser = null;
+            ApplicationUser? applicationUser = null;
 
-           var user = _userRepository.FindByLogin(userDTO.Login);
+           var user = await _userRepository.FindByLogin(userDTO.Login);
             if (user != null)
                 applicationUser = new ApplicationUser() { Id = user.Id, Login = user.Login };
 
            return applicationUser;
         }
 
-        public OperationDetails Registration(UserDTO userDTO)
+        public async Task<OperationDetails> Registration(UserDTO userDTO)
         {
-            var user = _userRepository.FindByLogin(userDTO.Login);
+            var user = await _userRepository.FindByLogin(userDTO.Login);
 
             if (user == null)
             {
-                User newUser = new User() { Login = userDTO.Login, Name = userDTO.Name };
+                User newUser = new() { Login = userDTO.Login, Name = userDTO.Name };
 
-                _userRepository.Create(newUser);
-                _context.SaveChanges();
+                await _userRepository.Create(newUser);
+                await _context.SaveChangesAsync();
+
                 return new OperationDetails(true, "Регистрация успешно пройдена");
             }
             else
@@ -47,13 +48,13 @@ namespace BookClub.BLL.Services
             }
         }
 
-        public ApplicationUser AuthorizationAndRegistration(UserDTO userDTO)
+        public async Task<ApplicationUser?> AuthorizationAndRegistration(UserDTO userDTO)
         {
-            ApplicationUser user = Authorization(userDTO);
+            ApplicationUser? user = await Authorization(userDTO);
             if (user == null)
             {
-                Registration(userDTO);
-                user = Authorization(userDTO);
+                await Registration(userDTO);
+                user = await Authorization(userDTO);
             }
                 
             return user;

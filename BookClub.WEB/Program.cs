@@ -1,14 +1,16 @@
 using BookClub.BLL.Interfaces;
 using BookClub.BLL.Services;
+using BookClub.DAL.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
-IServiceCreator serviceCreator = new ServiceCreator();
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<IUserService>(x => serviceCreator.CreateUserService());
-builder.Services.AddTransient<IReadingRoomService>(x => serviceCreator.CreateReadingRoomService());
+
+builder.Services.AddDbContext<BookClubContext>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IReadingRoomService, ReadingRoomService>();
 
 var app = builder.Build();
 

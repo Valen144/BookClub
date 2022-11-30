@@ -5,8 +5,8 @@ namespace BookClub.BLL.Interfaces
 {
     public interface IUserService
     {
-        ApplicationUser AuthorizationAndRegistration(UserDTO userDTO);
-        ApplicationUser Authorization(UserDTO userDTO);
-        OperationDetails Registration(UserDTO userDTO);
+        Task<ApplicationUser?> AuthorizationAndRegistration(UserDTO userDTO);
+        Task<ApplicationUser?> Authorization(UserDTO userDTO);
+        Task<OperationDetails> Registration(UserDTO userDTO);
     }
 }

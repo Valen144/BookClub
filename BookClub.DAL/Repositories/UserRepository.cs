@@ -1,5 +1,6 @@
 ﻿using BookClub.DAL.EF;
 using BookClub.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookClub.DAL.Repositories
 {
@@ -12,19 +13,19 @@ namespace BookClub.DAL.Repositories
             _context = context;
         }
 
-        public void Create(User user)
+        public async Task Create(User user)
         {
-            _context.Users.Add(user);
+           await _context.Users.AddAsync(user);
         }
 
-        public User Get(int id)
+        public async Task<User?> Get(int id)
         {
-            return _context.Users.Find(id);
+            return await _context.Users.FindAsync(id);
         }
 
-        public User FindByLogin(string login)
+        public async Task<User?> FindByLogin(string login)
         {
-            return _context.Users.FirstOrDefault(x => x.Login == login);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Login == login);
         }
     }
 }

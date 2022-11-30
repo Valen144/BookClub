@@ -21,18 +21,18 @@ namespace BookClub.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-              var user = _userService.AuthorizationAndRegistration(new UserDTO() { Login = model.Login });
+              var user = await _userService.AuthorizationAndRegistration(new UserDTO() { Login = model.Login });
 
                 if (user == null)
                     ModelState.AddModelError("", "Ошибка авторизации");
                 else
                 {
                     HttpContext.Response.Cookies.Append("UserId", user.Id.ToString());
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("GetAllBooks", "Home");
                 }
             }
 

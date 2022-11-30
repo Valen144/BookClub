@@ -14,15 +14,15 @@ namespace BookClub.WEB.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> GetAllBooks()
         {
-            return View(GetBooks());
+            return View(await GetBooks());
         }
 
         [HttpPost]
-        public IActionResult Index(int id)
+        public async Task<IActionResult> AddBookToUser(int id)
         {
-          var operation = _readingRoomService.AddBook(new BookHistoryDTO()
+          var operation = await _readingRoomService.AddBook(new BookHistoryDTO()
           {
                 BookId = id,
                 UserId = GetIdUser(),
@@ -31,30 +31,31 @@ namespace BookClub.WEB.Controllers
 
             if (!operation.Succedeed)
                 ModelState.AddModelError("", operation.Message);
-            return View(GetBooks());
+
+            return RedirectToAction("GetAllBooks");
         }
 
         [HttpGet]
-        public IActionResult MyReadBook()
+        public async Task<IActionResult> UserReadBook()
         {
-            return View(GetBooksHistory());
+            return View(await GetBooksHistory());
         }
 
         [HttpPost]
-        public IActionResult MyReadBook(int idBookHistory)
+        public async Task<IActionResult> DeleteReadBook(int idBookHistory)
         {
-            _readingRoomService.RemoveBook(idBookHistory);
-            return RedirectToAction("MyReadBook");
+            await _readingRoomService.RemoveBook(idBookHistory);
+            return RedirectToAction("UserReadBook");
         }
 
-        private IEnumerable<BookDTO> GetBooks()
+        private async Task<IEnumerable<BookDTO>> GetBooks()
         { 
-            return _readingRoomService.GetBooks();
+            return await _readingRoomService.GetBooks();
         }
 
-        private IEnumerable<BookHistoryDTO> GetBooksHistory()
+        private async Task<IEnumerable<BookHistoryDTO>> GetBooksHistory()
         {
-            return _readingRoomService.GetUserBookHistory(GetIdUser());
+            return await _readingRoomService.GetUserBookHistory(GetIdUser());
         }
 
         private int GetIdUser()
